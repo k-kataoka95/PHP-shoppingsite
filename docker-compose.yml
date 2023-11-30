@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+    web:
+        build: ./config/php
+        container_name: "php_apache_container"
+        volumes:
+            - "./html/:/var/www/html"
+        restart: always
+        ports:
+            - "80:80"
+        depends_on:
+            - mysql
+    mysql:
+        build: .
+        volumes:
+            - ./mysql:/var/lib/mysql
+            - ./config/mysql/my.cnf:/etc/mysql/my.cnf
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=shop
+            - MYSQL_USER=kana
+            - MYSQL_PASSWORD=kana0113
+        ports:
+            - "4306:3306"
+        container_name: mysql8-1
